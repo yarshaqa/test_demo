@@ -2,6 +2,7 @@ from selenium import webdriver
 from functions import random_name_surname, is_display, check_exists_by_xpath
 import time
 import const
+from selenium.common.exceptions import NoSuchElementException
 
 #Registration Positive scenario__________________________________________________________________1
 browser = webdriver.Chrome("C:\\chromedriver\\chromedriver.exe")
@@ -32,7 +33,13 @@ browser.find_element_by_xpath('/html/body/div/div/div[2]/form/div[1]/input').sen
 browser.find_element_by_xpath('/html/body/div/div/div[2]/form/div[2]/input').send_keys(const.pass_value)
 browser.find_element_by_xpath('/html/body/div/div/div[2]/form/div[4]/button').click()
 
-print(check_exists_by_xpath('/html/body/div/nav/div[1]/div/div[1]/div[1]/a/img'))
+
+try:
+    browser.find_element_by_xpath('/html/body/div/nav/div[1]/div/div[1]/div[1]/a/img')
+    if True:
+        print('login after successfull registration   ---     is ok')
+except NoSuchElementException:
+    print('login after successfull registration  ------------------------------------------------------------------   DROPPED')
 print('Credentials:', const.email_value, const.pass_value)
 time.sleep(3)
 browser.quit()
